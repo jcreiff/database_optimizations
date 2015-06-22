@@ -27,9 +27,9 @@ After completing this assignment, you should...
 * Add appropriate indices to the data structure (via migrations).
 * Record how long it takes to run the migrations that add indices. **AddIndices: migrated (1.4633s)**
 * Use Chrome's developer tools to determine how long it takes the index page to load.  Record that time. **Completed 200 OK in 2441ms** (0:02)
-* Calculate your percent improvement in runtime. **2441ms is 1.96% of 124245ms, so basically a 98% improvement**
+* Calculate your percent improvement in runtime. **2441ms is 1.96% of 124245ms, so basically a 98% improvement** (After the first load, it's always in the 1200ms range, even if I command-R instead of click the refresh button, or even if I change the request to a different assembly name...)
 * Examine the code that is run when the root path loads.  Modify the commands which access the database to make them more efficient.
-* Calculate your percent improvement in runtime.
+* Calculate your percent improvement in runtime. **Completed 200 OK in 259ms, roughly 90% improvement again**
 * Once you have optimized your code as much as you think you can, drop the database, run `rake db:migrate`, and then time how long it takes to run `rake db:seed`.  Was there an improvement or a worsening of runtime?  By what percent and why?
 * Which is faster: (a) running `rake db:seed` without indices and then running a migration to add indices, or (b) adding indices during your initial `rake db:migrate`, then running `rake db:seed`?
 
