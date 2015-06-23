@@ -28,10 +28,10 @@
 * Which is faster: (a) running `rake db:seed` without indices and then running a migration to add indices, or (b) adding indices during your initial `rake db:migrate`, then running `rake db:seed`?
  * Seeding without indices is faster.  I'd trade those 12 minutes of loading seeds for the 1 second migration any day.
 * Record the size of your database (in bytes).
-  * ?
+  * 572.6 MB
 * Record the size of your development log.
-  * ?
+  * 1.73 GB
 * Give at least one method (feel free to Google) for reducing the size of one of these, yet keeping your data intact.
-  * ?
+  * log rotation
 * Do you think that this is smaller, about right, or larger than the size of databases you'll be working with in your career?
   * My first instinct is to say this is way bigger than what I'll work with, but then again, if an app has several thousand users, there could be hundreds of data points associated with each of them, and that number only grows over time. So in reality, this may be par for the course?  I have a feeling that it won't be uncommon to work with a database this large, but it will also be more common for the size to be the result of a more complex data structure than this one (rather than half a million items in one table.)
