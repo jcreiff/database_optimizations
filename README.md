@@ -1,50 +1,37 @@
 # Database Optimizations
 
-## Objectives
-
-After completing this assignment, you should...
-
-* Understand the downsides of loops within loops in Rails.
-* Understand the benefits and appropriate use of indices on database tables.
-* Understand the downside of indices.
-* Be able to measure the runtime of various webapp functions.
-* Be able to query the database more efficiently.
-* Be able to implement database indices.
-
-## Deliverables
-
-* **Estimate:**  ~3.5 hrs
-* **A README.** The README should include data on all of the metrics requested below.
-* **A test suite.** Build your application using TDD.  Your test suite must include unit tests, controller tests, and at least two integration tests.
+* **Estimate:**  
+  * ~3.5 hrs
 * **A reflection on your estimate.**
+  * Took closer to 5.5 hrs, but I was not anticipating the seeds taking an hour to load...lack of familiarity with polymorphic associations and outer vs inner join also slowed me down.
 
-## Normal Mode
 
-* Run `rake db:seed`, but time it.  Record the amount of time it takes for the seeds to run. **Completed running in 3254.137948 seconds.** (54+ minutes)
-* Turn on your server and open your browser.
-* Open Chrome's timeline in developer tools, then go to `localhost:3000`.
-* Determine how long it takes the index page to load.  Record that time. **Completed 200 OK in 124245ms** (2:04)
+
+* Run `rake db:seed`, but time it.  Record the amount of time it takes for the seeds to run.  
+  * `Completed running in 3254.137948 seconds.` (54+ minutes)
+* Determine how long it takes the index page to load.  Record that time.
+  * `Completed 200 OK in 124245ms` (2:04)
 * Add appropriate indices to the data structure (via migrations).
-* Record how long it takes to run the migrations that add indices. **AddIndices: migrated (1.4633s)**
-* Use Chrome's developer tools to determine how long it takes the index page to load.  Record that time. **Completed 200 OK in 2441ms** (0:02)
-* Calculate your percent improvement in runtime. **2441ms is 1.96% of 124245ms, so basically a 98% improvement** (After the first load, it's always in the 1200ms range, even if I command-R instead of click the refresh button, or even if I change the request to a different assembly name...)
+  * Added `:assembly_id` on `:sequences`, `:sequence_id` on `:genes`, and `[:subject_id, :subject_type]` on `:hits`
+* Record how long it takes to run the migrations that add indices.
+  * `AddIndices: migrated (1.4633s)`
+* Use Chrome's developer tools to determine how long it takes the index page to load.  Record that time.
+  * `Completed 200 OK in 2441ms` (0:02)
+* Calculate your percent improvement in runtime.
+  * 2441ms is 1.96% of 124245ms, so basically a 98% improvement** (After the first load, it's always in the 800-1200ms range, even if I command-R instead of click the refresh button, or even if I change the request to a different assembly name...)
 * Examine the code that is run when the root path loads.  Modify the commands which access the database to make them more efficient.
-* Calculate your percent improvement in runtime. **Completed 200 OK in 259ms, roughly 90% improvement again**
+  * Made a long string of `.where` calls--tried to find a solution with `.includes` or `.joins`, but `.where` seemed to be the easiest fix.
+* Calculate your percent improvement in runtime.
+  * `Completed 200 OK in 259ms`, roughly 90% improvement again
 * Once you have optimized your code as much as you think you can, drop the database, run `rake db:migrate`, and then time how long it takes to run `rake db:seed`.  Was there an improvement or a worsening of runtime?  By what percent and why?
+  * `Completed running in 3995.667691 seconds.` (66+ minutes) This is a 22% increase in run-time. This is because the indices, though they make the queries much faster, add time to the process of inserting information into the database. I assume this is because the "tree" is being built and adjusted with every new `create!` while seeds are running
 * Which is faster: (a) running `rake db:seed` without indices and then running a migration to add indices, or (b) adding indices during your initial `rake db:migrate`, then running `rake db:seed`?
-
-You've done a good job of analyzing runtime, but now take a look at storage space:
-
+ * Seeding without indices is faster.  I'd trade those 12 minutes of loading seeds for the 1 second migration any day.
 * Record the size of your database (in bytes).
+  * ?
 * Record the size of your development log.
+  * ?
 * Give at least one method (feel free to Google) for reducing the size of one of these, yet keeping your data intact.
+  * ?
 * Do you think that this is smaller, about right, or larger than the size of databases you'll be working with in your career?
-
-## Hard Mode
-
-This data structure has a number of tables connected with a series of one-to-many relationships between them.  A more advanced way to improve efficiency would be to cache the id of the upper-most (ancestor) table's id in a field in the lower-most (descendant) table.  To accomplish this, do the following:
-
-* Write a migration to add this cached foreign key.
-* Write callbacks to maintain this foreign key appropriately.  Hint: you will need more than one.
-* Modify the report to use this new cached field instead of the actual id stored in the ancestor table.
-* Measure the improvement in runtime.
+  * My first instinct is to say this is way bigger than what I'll work with, but then again, if an app has several thousand users, there could be hundreds of data points associated with each of them, and that number only grows over time. So in reality, this may be par for the course?  I have a feeling that it won't be uncommon to work with a database this large, but it will also be more common for the size to be the result of a more complex data structure than this one (rather than half a million items in one table.)
