@@ -1,6 +1,13 @@
 class ReportsController < ApplicationController
-  def all_data
-    @assembly = Assembly.find_by_name(params[:name])
-    @hits = Hit.where(subject: Gene.where(sequence: Sequence.where(assembly: @assembly))).order(percent_similarity: :desc)
+
+  def welcome
   end
+
+  def thank_you
+    @email = params[:email]
+    @assembly_name = params[:assembly_name]
+    ReporterJob.perform_later(@email, @assembly_name)
+    ReportMailer.get_report(@email, @assembly_name).deliver_later
+  end
+
 end

@@ -1,7 +1,7 @@
 class ReportMailer < ApplicationMailer
 
-  def get_report
-    mail(to: "jcreiff@gmail.com", subject: "MAILERS")
+  def get_report(email, assembly_name)
+    mail(to: email, subject: "Report for Assembly #{assembly_name}")
   end
 
 end
