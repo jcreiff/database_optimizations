@@ -11,17 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630174312) do
+ActiveRecord::Schema.define(version: 20150630190141) do
 
   create_table "assemblies", force: :cascade do |t|
     t.string   "name"
     t.date     "run_on"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "uploaded_file_file_name"
-    t.string   "uploaded_file_content_type"
-    t.integer  "uploaded_file_file_size"
-    t.datetime "uploaded_file_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -62,6 +58,16 @@ ActiveRecord::Schema.define(version: 20150630174312) do
   end
 
   add_index "hits", ["subject_id", "subject_type"], name: "index_hits_on_subject_id_and_subject_type"
+
+  create_table "reports", force: :cascade do |t|
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "uploaded_file_file_name"
+    t.string   "uploaded_file_content_type"
+    t.integer  "uploaded_file_file_size"
+    t.datetime "uploaded_file_updated_at"
+    t.integer  "assembly_id"
+  end
 
   create_table "sequences", force: :cascade do |t|
     t.text     "dna"
