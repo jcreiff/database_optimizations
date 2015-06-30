@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'aws-sdk', '~> 1.6'
 gem 'paperclip'
 gem 'faker'
 gem 'delayed_job_active_record'
