@@ -3,6 +3,5 @@
 <%= form_tag reports_thank_you_path, multipart: true do %>
   <%= text_field_tag 'email', nil, placeholder: 'Email' %></br></br>
   <%= text_field_tag 'assembly_name', nil, placeholder: 'Assembly Name' %></br></br>
-  <%= file_field_tag 'uploaded_file' %></br></br>
   <%= submit_tag 'Submit' %>
 <% end %>

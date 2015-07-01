@@ -1,13 +1,2 @@
-Hits for <%= @assembly.name %>
-Number of hits: <%= @hits.length %>
 
-
-Matching Gene Name
-Matching DNA
-Percent Similarity
-
-<% @hits.each do |h| %>
-  <%= h.match_gene_name %>
-  <%= h.match_gene_dna.first(100) %>
-  <%= h.percent_similarity %>
-<% end %>
+<%= @report.uploaded_file %>
