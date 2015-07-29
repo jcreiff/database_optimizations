@@ -35,3 +35,5 @@
   * log rotation
 * Do you think that this is smaller, about right, or larger than the size of databases you'll be working with in your career?
   * My first instinct is to say this is way bigger than what I'll work with, but then again, if an app has several thousand users, there could be hundreds of data points associated with each of them, and that number only grows over time. So in reality, this may be par for the course?  I have a feeling that it won't be uncommon to work with a database this large, but it will also be more common for the size to be the result of a more complex data structure than this one (rather than half a million items in one table.)
+ 
+######*Assignment from Week 8 of The Iron Yard's Ruby on Rails course (Durham)*
